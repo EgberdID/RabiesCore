@@ -1,0 +1,27 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "subdis_id": 1,
+        "name": "Kelurahan A"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[124.85, -1.47], [124.85, -1.46], [124.86, -1.46], [124.85, -1.47]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "subdis_id": 2,
+        "name": "Kelurahan B"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[124.86, -1.47], [124.86, -1.46], [124.87, -1.46], [124.86, -1.47]]]
+      }
+    }
+  ]
+}

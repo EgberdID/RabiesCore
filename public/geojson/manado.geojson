@@ -1,0 +1,13 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Kecamatan A", "subdis_id": 1 },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[124.84,-1.47],[124.85,-1.47],[124.85,-1.48],[124.84,-1.48],[124.84,-1.47]]]
+      }
+    }
+  ]
+}

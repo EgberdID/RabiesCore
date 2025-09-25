@@ -1,0 +1,107 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+class SubDisTableSeeder extends Seeder
+{
+    public function run(): void
+    {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('sub_dis')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+       
+        DB::table('sub_dis')->insert([
+            ['id' => 1, 'district_id' => 1, 'subdis_id' => '71.71.01.1001', 'name' => 'Molas', 'lat' => '1.54167', 'lng'=>'124.83444'],
+            ['id' => 2, 'district_id' => 1, 'subdis_id' => '71.71.01.1006', 'name' => 'Tongkaina', 'lat'=>'1.571389','lng'=>'124.8125'],
+            ['id' => 3, 'district_id' => 1, 'subdis_id' => '71.71.01.1007', 'name' => 'Meras', 'lat'=>'1.55022','lng'=>'124.82036'],
+            ['id' => 4, 'district_id' => 1, 'subdis_id' => '71.71.01.1008', 'name' => 'Bailang', 'lat'=>'1.55833','lng'=>'124.849014'],
+            ['id' => 6, 'district_id' => 1, 'subdis_id' => '71.71.01.1009', 'name' => 'Pandu', 'lat'=>'1.55472','lng'=>'124.83361'],
+            ['id' => 7, 'district_id' => 2, 'subdis_id' => '71.71.02.1001', 'name' => 'Bitung Karangria', 'lat'=>'1.45222','lng'=>'124.84306'],
+            ['id' => 8, 'district_id' => 2, 'subdis_id' => '71.71.02.1002', 'name' => 'Tuminting', 'lat'=>'1.48028','lng'=>'124.82778'],
+            ['id' => 9, 'district_id' => 2, 'subdis_id' => '71.71.02.1003', 'name' => 'Tumumpa I', 'lat'=>'1.46528','lng'=>'124.82889'],
+            ['id' => 10, 'district_id' => 2, 'subdis_id' => '71.71.02.1004', 'name' => 'Maasing', 'lat'=>'1.45611','lng'=>'124.84250'],
+            ['id' => 11, 'district_id' => 2, 'subdis_id' => '71.71.02.1005', 'name' => 'Sindulang I', 'lat'=>'1.44944','lng'=>'124.83611'],
+            ['id' => 12, 'district_id' => 2, 'subdis_id' => '71.71.02.1006', 'name' => 'Sindulang II', 'lat'=>'1.44833','lng'=>'124.83444'],
+            ['id' => 13, 'district_id' => 2, 'subdis_id' => '71.71.02.1007', 'name' => 'Islam', 'lat'=>'1.45139','lng'=>'124.83833'],
+            ['id' => 14, 'district_id' => 2, 'subdis_id' => '71.71.02.1008', 'name' => 'Tumumpa II', 'lat'=>'1.46611','lng'=>'124.82972'],
+            ['id' => 15, 'district_id' => 2, 'subdis_id' => '71.71.02.1009', 'name' => 'Sumompo', 'lat'=>'1.45750','lng'=>'124.83139'],
+            ['id' => 16, 'district_id' => 2, 'subdis_id' => '71.71.02.1010', 'name' => 'Mahawu', 'lat'=>'1.45861','lng'=>'124.83750'],
+            ['id' => 17, 'district_id' => 3, 'subdis_id' => '71.71.03.1001', 'name' => 'Singkil I', 'lat'=>'1.44806','lng'=>'124.85028'],
+            ['id' => 18, 'district_id' => 3, 'subdis_id' => '71.71.03.1002', 'name' => 'Singkil II', 'lat'=>'1.44917','lng'=>'124.85111'],
+            ['id' => 19, 'district_id' => 3, 'subdis_id' => '71.71.03.1003', 'name' => 'Wawonasa', 'lat'=>'1.44083','lng'=>'124.84944'],
+            ['id' => 20, 'district_id' => 3, 'subdis_id' => '71.71.03.1004', 'name' => 'Karame', 'lat'=>'1.44139','lng'=>'124.85361'],
+            ['id' => 21, 'district_id' => 3, 'subdis_id' => '71.71.03.1005', 'name' => 'Ketang Baru', 'lat'=>'1.44361','lng'=>'124.85750'],
+            ['id' => 22, 'district_id' => 3, 'subdis_id' => '71.71.03.1006', 'name' => 'Ternate Baru', 'lat'=>'1.44444','lng'=>'124.86028'],
+            ['id' => 23, 'district_id' => 3, 'subdis_id' => '71.71.03.1007', 'name' => 'Kombos Barat', 'lat'=>'1.44611','lng'=>'124.86250'],
+            ['id' => 24, 'district_id' => 3, 'subdis_id' => '71.71.03.1008', 'name' => 'Kombos Timur', 'lat'=>'1.44694','lng'=>'124.86444'],
+            ['id' => 25, 'district_id' => 3, 'subdis_id' => '71.71.03.1009', 'name' => 'Ternate Tanjung', 'lat'=>'1.44833','lng'=>'124.86722'],
+            ['id' => 26, 'district_id' => 4, 'subdis_id' => '71.71.04.1002', 'name' => 'Mahakeret Timur', 'lat'=>'1.44000','lng'=>'124.84500'],
+            ['id' => 27, 'district_id' => 4, 'subdis_id' => '71.71.04.1003', 'name' => 'Mahakeret Barat', 'lat'=>'1.43944','lng'=>'124.84278'],
+            ['id' => 28, 'district_id' => 4, 'subdis_id' => '71.71.04.1004', 'name' => 'Teling Bawah', 'lat'=>'1.43833','lng'=>'124.84000'],
+            ['id' => 29, 'district_id' => 4, 'subdis_id' => '71.71.04.1005', 'name' => 'Wenang Utara', 'lat'=>'1.43611','lng'=>'124.83750'],
+            ['id' => 30, 'district_id' => 4, 'subdis_id' => '71.71.04.1006', 'name' => 'Wenang Selatan', 'lat'=>'1.43444','lng'=>'124.83611'],
+            ['id' => 31, 'district_id' => 4, 'subdis_id' => '71.71.04.1007', 'name' => 'Pinaesaan', 'lat'=>'1.43250','lng'=>'124.83444'],
+            ['id' => 32, 'district_id' => 4, 'subdis_id' => '71.71.04.1008', 'name' => 'Calaca', 'lat'=>'1.43111','lng'=>'124.83250'],
+            ['id' => 33, 'district_id' => 4, 'subdis_id' => '71.71.04.1009', 'name' => 'Istiqlal', 'lat'=>'1.42972','lng'=>'124.83111'],
+            ['id' => 34, 'district_id' => 4, 'subdis_id' => '71.71.04.1010', 'name' => 'Lawangirung', 'lat'=>'1.42833','lng'=>'124.82972'],
+            ['id' => 35, 'district_id' => 4, 'subdis_id' => '71.71.04.1011', 'name' => 'Komo Luar', 'lat'=>'1.42694','lng'=>'124.82833'],
+            ['id' => 36, 'district_id' => 4, 'subdis_id' => '71.71.04.1012', 'name' => 'Bumi Beringin', 'lat'=>'1.42556','lng'=>'124.82694'],
+            ['id' => 37, 'district_id' => 5, 'subdis_id' => '71.71.05.1008', 'name' => 'Tikala Baru', 'lat'=>'1.42111','lng'=>'124.82500'],
+            ['id' => 38, 'district_id' => 5, 'subdis_id' => '71.71.05.1009', 'name' => 'Taas', 'lat'=>'1.41944','lng'=>'124.82361'],
+            ['id' => 39, 'district_id' => 5, 'subdis_id' => '71.71.05.1010', 'name' => 'Paal IV', 'lat'=>'1.41778','lng'=>'124.82222'],
+            ['id' => 40, 'district_id' => 5, 'subdis_id' => '71.71.05.1011', 'name' => 'Banjer', 'lat'=>'1.41611','lng'=>'124.82083'],
+            ['id' => 41, 'district_id' => 5, 'subdis_id' => '71.71.05.1012', 'name' => 'Tikala Ares', 'lat'=>'1.41444','lng'=>'124.81944'],
+            ['id' => 42, 'district_id' => 6, 'subdis_id' => '71.71.06.1001', 'name' => 'Sario Utara', 'lat'=>'1.45500','lng'=>'124.83278'],
+            ['id' => 43, 'district_id' => 6, 'subdis_id' => '71.71.06.1002', 'name' => 'Sario Kotabaru', 'lat'=>'1.45333','lng'=>'124.83111'],
+            ['id' => 44, 'district_id' => 6, 'subdis_id' => '71.71.06.1003', 'name' => 'Sario Tumpaan', 'lat'=>'1.45167','lng'=>'124.82944'],
+            ['id' => 45, 'district_id' => 6, 'subdis_id' => '71.71.06.1004', 'name' => 'Sario', 'lat'=>'1.45000','lng'=>'124.82833'],
+            ['id' => 46, 'district_id' => 6, 'subdis_id' => '71.71.06.1005', 'name' => 'Titiwungan Utara', 'lat'=>'1.44778','lng'=>'124.82611'],
+            ['id' => 47, 'district_id' => 6, 'subdis_id' => '71.71.06.1006', 'name' => 'Titiwungan Selatan', 'lat'=>'1.44611','lng'=>'124.82444'],
+            ['id' => 48, 'district_id' => 6, 'subdis_id' => '71.71.06.1007', 'name' => 'Ranotana', 'lat'=>'1.44444','lng'=>'124.82278'],
+            ['id' => 49, 'district_id' => 7, 'subdis_id' => '71.71.07.1001', 'name' => 'Wanea', 'lat'=>'1.43000','lng'=>'124.84111'],
+            ['id' => 50, 'district_id' => 7, 'subdis_id' => '71.71.07.1002', 'name' => 'Tanjung Batu', 'lat'=>'1.43167','lng'=>'124.84278'],
+            ['id' => 51, 'district_id' => 7, 'subdis_id' => '71.71.07.1003', 'name' => 'Pakowa', 'lat'=>'1.43333','lng'=>'124.84444'],
+            ['id' => 52, 'district_id' => 7, 'subdis_id' => '71.71.07.1004', 'name' => 'Bumi Nyiur', 'lat'=>'1.43444','lng'=>'124.84611'],
+            ['id' => 53, 'district_id' => 7, 'subdis_id' => '71.71.07.1005', 'name' => 'Ranotana Weru', 'lat'=>'1.4547','lng'=>'124.8404'],
+            ['id' => 54, 'district_id' => 7, 'subdis_id' => '71.71.07.1006', 'name' => 'Teling Atas', 'lat'=>'1.4682','lng'=>'124.8499'],
+            ['id' => 55, 'district_id' => 7, 'subdis_id' => '71.71.07.1007', 'name' => 'Tingkulu', 'lat'=>'1.4320','lng'=>'124.8526'],
+            ['id' => 56, 'district_id' => 7, 'subdis_id' => '71.71.07.1008', 'name' => 'Karombasan Utara', 'lat'=>'1.4517','lng'=>'124.8500'],
+            ['id' => 57, 'district_id' => 7, 'subdis_id' => '71.71.07.1009', 'name' => 'Karombasan Selatan', 'lat'=>'1.44167','lng'=>'124.85444'],
+            ['id' => 58, 'district_id' => 8, 'subdis_id' => '71.71.08.1001', 'name' => 'Paniki Bawah', 'lat'=>'1.46222','lng'=>'124.83861'],
+            ['id' => 59, 'district_id' => 8, 'subdis_id' => '71.71.08.1002', 'name' => 'Lapangan', 'lat'=>'1.46056','lng'=>'124.83694'],
+            ['id' => 60, 'district_id' => 8, 'subdis_id' => '71.71.08.1003', 'name' => 'Mapanget Barat', 'lat'=>'1.45889','lng'=>'124.83528'],
+            ['id' => 61, 'district_id' => 8, 'subdis_id' => '71.71.08.1004', 'name' => 'Kima Atas', 'lat'=>'1.45722','lng'=>'124.83361'],
+            ['id' => 62, 'district_id' => 8, 'subdis_id' => '71.71.08.1005', 'name' => 'Buha', 'lat'=>'1.45556','lng'=>'124.83222'],
+            ['id' => 63, 'district_id' => 8, 'subdis_id' => '71.71.08.1006', 'name' => 'Bengkol', 'lat'=>'1.45444','lng'=>'124.83083'],
+            ['id' => 64, 'district_id' => 8, 'subdis_id' => '71.71.08.1008', 'name' => 'Kairagi I', 'lat'=>'1.45278','lng'=>'124.82944'],
+            ['id' => 65, 'district_id' => 8, 'subdis_id' => '71.71.08.1009', 'name' => 'Kairagi II', 'lat'=>'1.45167','lng'=>'124.82806'],
+            ['id' => 66, 'district_id' => 8, 'subdis_id' => '71.71.08.1010', 'name' => 'Paniki I', 'lat'=>'1.46333','lng'=>'124.83611'],
+            ['id' => 67, 'district_id' => 8, 'subdis_id' => '71.71.08.1011', 'name' => 'Paniki II', 'lat'=>'1.46444','lng'=>'124.83750'],
+            ['id' => 68, 'district_id' => 9, 'subdis_id' => '71.71.09.1001', 'name' => 'Malalayang I', 'lat'=>'1.46833','lng'=>'124.84083'],
+            ['id' => 69, 'district_id' => 9, 'subdis_id' => '71.71.09.1002', 'name' => 'Bahu', 'lat'=>'1.46667','lng'=>'124.83889'],
+            ['id' => 70, 'district_id' => 9, 'subdis_id' => '71.71.09.1003', 'name' => 'Kleak', 'lat'=>'1.46500','lng'=>'124.83722'],
+            ['id' => 71, 'district_id' => 9, 'subdis_id' => '71.71.09.1004', 'name' => 'Batu Kota', 'lat'=>'1.46333','lng'=>'124.83556'],
+            ['id' => 72, 'district_id' => 9, 'subdis_id' => '71.71.09.1005', 'name' => 'Malalayang I Timur', 'lat'=>'1.46944','lng'=>'124.84167'],
+            ['id' => 73, 'district_id' => 9, 'subdis_id' => '71.71.09.1006', 'name' => 'Malalayang I Barat', 'lat'=>'1.46778','lng'=>'124.83972'],
+            ['id' => 74, 'district_id' => 9, 'subdis_id' => '71.71.09.1007', 'name' => 'Malalayang II', 'lat'=>'1.47000','lng'=>'124.84306'],
+            ['id' => 75, 'district_id' => 9, 'subdis_id' => '71.71.09.1008', 'name' => 'Winangun I', 'lat'=>'1.47111','lng'=>'124.84444'],
+            ['id' => 76, 'district_id' => 9, 'subdis_id' => '71.71.09.1009', 'name' => 'Winangun II', 'lat'=>'1.47222','lng'=>'124.84583'],
+            ['id' => 77, 'district_id' => 10, 'subdis_id' => '71.71.10.1001', 'name' => 'Bunaken', 'lat'=>'1.63833','lng'=>'124.78056'],
+            ['id' => 78, 'district_id' => 10, 'subdis_id' => '71.71.10.1002', 'name' => 'Manado Tua I', 'lat'=>'1.61778','lng'=>'124.80028'],
+            ['id' => 79, 'district_id' => 10, 'subdis_id' => '71.71.10.1003', 'name' => 'Manado Tua II', 'lat'=>'1.61611','lng'=>'124.80250'],
+            ['id' => 80, 'district_id' => 10, 'subdis_id' => '71.71.10.1004', 'name' => 'Alung Banua', 'lat'=>'1.62056','lng'=>'124.80583'],
+            ['id' => 81, 'district_id' => 4, 'subdis_id' => '71.71.04.1001', 'name' => 'Tikala Kumaraka', 'lat'=>'1.42250','lng'=>'124.82694'],
+            ['id' => 82, 'district_id' => 11, 'subdis_id' => '71.71.11.1001', 'name' => 'Ranomuut', 'lat'=>'1.47833','lng'=>'124.81444'],
+            ['id' => 83, 'district_id' => 11, 'subdis_id' => '71.71.11.1002', 'name' => 'Kairagi Weru', 'lat'=>'1.47611','lng'=>'124.81278'],
+            ['id' => 84, 'district_id' => 11, 'subdis_id' => '71.71.11.1003', 'name' => 'Paal Dua', 'lat'=>'1.47444','lng'=>'124.81111'],
+            ['id' => 85, 'district_id' => 11, 'subdis_id' => '71.71.11.1004', 'name' => 'Perkamil', 'lat'=>'1.47278','lng'=>'124.80944'],
+            ['id' => 86, 'district_id' => 11, 'subdis_id' => '71.71.11.1005', 'name' => 'Malendeng', 'lat'=>'1.47111','lng'=>'124.80778'],
+            ['id' => 87, 'district_id' => 11, 'subdis_id' => '71.71.11.1006', 'name' => 'Dendengan Dalam', 'lat'=>'1.46944','lng'=>'124.80611'],
+            ['id' => 88, 'district_id' => 11, 'subdis_id' => '71.71.11.1007', 'name' => 'Dendengan Luar', 'lat'=>'1.46833','lng'=>'124.80444'],
+        ]);
+    }
+}

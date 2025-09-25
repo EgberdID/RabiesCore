@@ -1,0 +1,27 @@
+/* === Background untuk halaman login === */
+.auth-body {
+    background: url("../images/back-aj.png") no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* HP/tablet → background tetap cover, tapi tidak fixed supaya enak di-scroll */
+@media (max-width: 768px) {
+    .auth-body {
+        background-attachment: scroll;
+        background-size: cover;
+    }
+}
+
+/* Supaya kontainer form login ada padding di HP */
+.account-pages {
+    max-width: 100%;
+    padding: 2rem 1rem;
+}
+
+/* Supaya di layar besar, form tetap center dengan lebar pas */
+@media (min-width: 768px) {
+    .account-pages {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
