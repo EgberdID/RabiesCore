@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
                     'Puskesmas Bunaken',
                     'Puskesmas Bunaken Kepulauan',
                     'Puskesmas Teling',
-                    'Puskesmas Paniki Bawah',
+                    // 'Puskesmas Paniki Bawah',
                     'Puskesmas Paniki Atas',
                     'RSUD Manado',
                     'RSUD SULUT',
