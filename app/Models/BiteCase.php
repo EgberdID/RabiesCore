@@ -12,7 +12,7 @@ class BiteCase extends Model
     protected $table = 'bite_cases';
 
     protected $fillable = [
-    'name', 'id_num', 'medrec_no', 'address', 'pas_dis_id', 'pas_subdis_id', 'job', 'age', 'phone',
+    'name', 'id_num', 'address', 'pas_dis_id', 'pas_subdis_id', 'job', 'age', 'phone',
     'case_day', 'case_time', 'district_id', 'sub_dis_id', 'village_id',
     'animal_type', 'animal_stat', 'animal_con',
     'bite_mark', 'bite_coun', 'wound_ide', 'exp_cat',

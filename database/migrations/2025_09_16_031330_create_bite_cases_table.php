@@ -16,7 +16,7 @@ return new class extends Migration
             //data pasien
             $table->string('name', 100);
             $table->string('id_num', 50)->unique();
-            $table->string('medrec_no',100);
+            // $table->string('medrec_no',100);
             $table->text('address');
             $table->unsignedBigInteger('pas_dis_id');
             $table->unsignedBigInteger('pas_subdis_id');

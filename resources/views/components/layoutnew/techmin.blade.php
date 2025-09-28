@@ -430,7 +430,7 @@
 						</button>
 					</form>
 
-		            <li class="side-nav-title">Pencatatan</li>
+		            <li class="side-nav-title">Pencatatan Pasien</li>
 
 					<li class="side-nav-item">
 		                <a href="{{ route('bite_cases.create') }}" class="side-nav-link">
@@ -444,6 +444,21 @@
 		                <a href="{{ route('bite_cases.index') }}" class="side-nav-link">
 		                    <i class="ri-file-list-line"></i>
 		                    <span> Daftar Kasus Tercatat</span>
+
+		                </a>
+		            </li>
+					<li class="side-nav-title">Pencatatan Pegawai</li>
+					 <li class="side-nav-item">
+		                <a href="{{ route('staff_vac.create') }}" class="side-nav-link">
+		                    <i class="ri-file-list-line"></i>
+		                    <span> Tambah Data Pegawai</span>
+
+		                </a>
+		            </li>
+					 <li class="side-nav-item">
+		                <a href="{{ route('staff_vac.index') }}" class="side-nav-link">
+		                    <i class="ri-file-list-line"></i>
+		                    <span> Daftar Pegawai Tercatat</span>
 
 		                </a>
 		            </li>

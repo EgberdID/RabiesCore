@@ -3,26 +3,26 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class AlertEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $case; // properti untuk data kasus
+    public $cases; // tampung banyak kasus (collection)
 
-    public function __construct($case)
+    public function __construct($cases)
     {
-        $this->case = $case; // assign data kasus ke properti
+        $this->cases = $cases;
     }
 
     public function build()
     {
         return $this->subject('Peringatan Kasus Rabies Tinggi')
-                    ->markdown('emails.alert'); // template markdown
+                    ->markdown('emails.alert')
+                    ->with([
+                        'cases' => $this->cases,
+                    ]);
     }
 }

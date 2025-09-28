@@ -22,14 +22,7 @@
                                                     <label for="nik" class="form-label">Nomor Induk Kependudukan</label>
                                                     <input type="text" id="nik" name="id_num" class="form-control" placeholder="">
                                                     <small id="nik-feedback" class="text-danger d-none">NIK sudah terdaftar!</small>
-                                                </div>
-
-
-                                                <div class="mb-3">
-                                                    <label for="no_med" class="form-label">Nomor Rekam Medis</label>
-                                                    <input type="text" id="no_med" name="medrec_no"
-                                                        class="form-control" placeholder="">
-                                                </div>
+                                                </div>                                                
                          
                                                 <div class="mb-3">
                                                     <label for="example-textarea" class="form-label">Alamat</label>
@@ -169,7 +162,7 @@
                                                         <option></option>
                                                         <option>Milik Sendiri</option>
                                                         <option>Liar</option>
-                                                        <option>tidak Diketahui</option>
+                                                        <option>Tidak Diketahui</option>
                                                     </select>
                                                 </div> 
 
@@ -269,7 +262,7 @@
                                         <div class="form-check form-check">
                                             <input type="radio" id="exp_cat" name="exp_cat" value="Kategori 1 (Kontak, Jilatan, Kulit utuh)"
                                                 class="form-check-input">
-                                            <label class="form-check-label" for="exp_cat" >Kategori 1 (Kontak, Jilatan, Kulit utuh)</label>
+                                            <label class="form-check-label" for="exp_cat" >Kategori 1 (Kontak, Jilatan, Kulit Utuh)</label>
                                         </div>
                                         <div class="form-check form-check">
                                             <input type="radio" id="exp_cat" name="exp_cat" value="Kategori 2 (Gigitan Ringan, Jilatan Pada Kulit Luka)"
@@ -382,7 +375,7 @@
                                         <input class="form-control" id="y_va" type="date"
                                                             name="y_va">
                                     </div> 
-                                  <div class="mb-3 col-lg-6">
+                                  {{-- <div class="mb-3 col-lg-6">
                                 <label for="status1" class="form-label">Status Pasien</label>
                                     <select class="form-select" id="status1" name="status">
                                       <option></option>
@@ -397,7 +390,7 @@
                                         <option >Edukasi</option>
                                       <option>Sudah Selesai</option>
                                     </select>
-                            </div>   
+                            </div>    --}}
                            
 
                                         <div class="col-xl-12">

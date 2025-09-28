@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\AlertEmail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class BiteCaseController extends Controller
 {
@@ -27,10 +28,14 @@ class BiteCaseController extends Controller
                         ->where('user', $user->name);
         }
 
-        // Filter status jika ada
-        if ($request->filled('status_filter')) {
-            $query->where('status', $request->status_filter);
-        }
+        // // Filter status jika ada
+        // if ($request->filled('status_filter')) {
+        //     $query->where('status', $request->status_filter);
+        // }
+         // Search nama saja
+        if ($request->filled('search')) {
+        $query->where('name', 'like', '%' . $request->search . '%');
+    }
         $biteCases = $query->paginate(10)->appends($request->query());
         //$biteCases = $query->get();
 
@@ -130,7 +135,6 @@ public function store(Request $request)
     $validated = $request->validate([
         'name'          => 'required|string|max:100',
         'id_num'        => 'required|string|max:50|unique:bite_cases,id_num',
-        'medrec_no'     => 'required|string|max:50',
         'address'       => 'required|string',
         'pas_dis_id'    => 'required|exists:district,id',
         'pas_subdis_id' => 'required|exists:sub_dis,id',
@@ -210,10 +214,9 @@ public function store(Request $request)
     $validated = $request->validate([
         'name'        => 'nullable|string|max:100',
         'id_num'      => 'nullable|string|max:50|unique:bite_cases,id_num,' . $biteCase->id,
-        'medrec_no'   => 'nullable|string|max:50',
         'address'     => 'nullable|string',
-       'pas_dis_id'    => 'required_unless:same_as_patient,on|exists:district,id',
-    'pas_subdis_id' => 'required_unless:same_as_patient,on|exists:sub_dis,id',
+        'pas_dis_id'    => 'required_unless:same_as_patient,on|exists:district,id',
+        'pas_subdis_id' => 'required_unless:same_as_patient,on|exists:sub_dis,id',
         'job'         => 'nullable|string|max:100',
         'age'         => 'nullable|integer|min:0|max:120',
         'phone'       => 'nullable|string|max:30',
@@ -301,21 +304,25 @@ public function store(Request $request)
         return view('bite_cases.chart_subdis', compact('labels', 'data'));
     }
 
-    // 📌 Kirim email peringatan
+   // 📌 Kirim email peringatan bulanan
     public function sendAlertEmail()
     {
         $cases = BiteCase::join('sub_dis', 'bite_cases.sub_dis_id', '=', 'sub_dis.id')
-            ->select('sub_dis.name', DB::raw('count(*) as total'))
+            ->select('sub_dis.name', DB::raw('COUNT(*) as total'))
+            ->whereMonth('bite_cases.created_at', now()->month)
+            ->whereYear('bite_cases.created_at', now()->year)
             ->groupBy('sub_dis.name')
-            ->having('total', '>=', 1)
+            ->having('total', '>=', 5)
             ->get();
 
-        foreach ($cases as $case) {
-            Mail::to('sertifikasiegberd@gmail.com')->send(new AlertEmail($case));
+        // kirim email hanya kalau ada data
+        if ($cases->isNotEmpty()) {
+            Mail::to('sertifikasiegberd@gmail.com')->send(new AlertEmail($cases));
         }
 
         return redirect()->back()->with('success', 'Email peringatan berhasil dikirim!');
     }
+
 
     // 📌 Peta kasus per subdis
     public function map()
@@ -407,6 +414,117 @@ public function idCheckResult(Request $request)
 
     return $html;
 }
+
+    //tarik data
+    public function export(Request $request)
+{
+    $user = Auth::user();
+
+    // Base query sesuai role
+    $query = BiteCase::with(['district','subDis','village']);
+
+    if (!$user->isSuperAdmin()) {
+        // Admin biasa hanya lihat data yang dia input
+        $query->where('user', $user->name);
+    }
+
+    // Filter bulan jika ada
+    if ($request->bulan) {
+        $year = substr($request->bulan, 0, 4);
+        $month = substr($request->bulan, 5, 2);
+        $query->whereYear('case_day', $year)
+              ->whereMonth('case_day', $month);
+    }
+
+    // Filter district / sub_dis / village
+    if ($request->district) {
+        $query->where('district_id', $request->district);
+    }
+    if ($request->sub_dis) {
+        $query->where('sub_dis_id', $request->sub_dis);
+    }
+    if ($request->village) {
+        $query->where('village_id', $request->village);
+    }
+
+    $data = $query->get();
+
+    // Data dropdown untuk filter
+    $districts = District::all();
+    $subDis = SubDis::all();
+    $villages = Village::all();
+
+    return view('bite_cases.export', compact('data','districts','subDis','villages'));
+}
+
+public function exportCsv(Request $request)
+{
+    $user = Auth::user();
+
+    $query = BiteCase::with(['district','subDis','village']);
+
+    // Jika bukan superadmin, batasi data sesuai user
+    if (!$user->isSuperAdmin()) {
+        $query->where('user', $user->name);
+    }
+
+    // Filter bulan
+    if ($request->bulan) {
+        $year = substr($request->bulan, 0, 4);
+        $month = substr($request->bulan, 5, 2);
+        $query->whereYear('case_day', $year)
+              ->whereMonth('case_day', $month);
+    }
+
+    // Filter district / sub_dis / village
+    if ($request->district) {
+        $query->where('district_id', $request->district);
+    }
+    if ($request->sub_dis) {
+        $query->where('sub_dis_id', $request->sub_dis);
+    }
+    if ($request->village) {
+        $query->where('village_id', $request->village);
+    }
+
+    $cases = $query->get();
+
+    $filename = "kasus_gigitan_" . now()->format('Ymd_His') . ".csv";
+    $handle = fopen('php://output', 'w');
+
+    $columns = [
+        'Nama','NIK','Umur','Tanggal Kasus','Waktu Kasus','Kecamatan',
+        'Kelurahan','Lingkungan','Kondisi Hewan','Tanda Gigitan',
+        'Kategori Ekspose','User Input'
+    ];
+    fputcsv($handle, $columns);
+
+    foreach ($cases as $case) {
+        $caseDay = $case->case_day ? Carbon::parse($case->case_day)->format('d-m-Y') : '';
+        fputcsv($handle, [
+            $case->name,
+            "'" . $case->id_num,
+            $case->age,
+            $caseDay,
+            $case->case_time,
+            $case->district?->name,
+            $case->subDis?->name,
+            $case->village?->name,
+            $case->animal_con,
+            $case->bite_mark,
+            $case->exp_cat,
+            $case->user,
+        ]);
+    }
+
+    return response()->streamDownload(function() use ($handle) {
+        fclose($handle);
+    }, $filename, [
+        'Content-Type' => 'text/csv',
+        'Content-Disposition' => 'attachment; filename="'.$filename.'"',
+    ]); 
+}
+
 
 
 

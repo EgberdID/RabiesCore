@@ -247,13 +247,29 @@
                                         </div>
                                     @endforeach
 
-                                    <h6 class="fs-15 mt-3">Vaksin Anti Rabies</h6>
+                                    {{-- <h6 class="fs-15 mt-3">Vaksin Anti Rabies</h6>
                                     @foreach(['var_dos12','var_dos3','var_dos4'] as $dose)
                                         <div class="mb-3">
                                             <label class="form-label">{{ ucfirst(str_replace('_',' ', $dose)) }}</label>
                                             <input type="date" class="form-control" name="{{ $dose }}" value="{{ old($dose, $biteCase->$dose) }}">
                                         </div>
-                                    @endforeach
+                                    @endforeach --}}
+<h6 class="fs-15 mt-3">Vaksin Anti Rabies</h6>
+@foreach(['var_dos12','var_dos3','var_dos4'] as $dose)
+    <div class="mb-3">
+        <label class="form-label">{{ ucfirst(str_replace('_',' ', $dose)) }}</label>
+        <input type="date" 
+               class="form-control" 
+               id="{{ $dose }}" 
+               name="{{ $dose }}" 
+               value="{{ old($dose, $biteCase->$dose) }}">
+        {{-- Hanya tampilkan rekomendasi untuk dos3 & dos4 --}}
+        @if($dose != 'var_dos12')
+            <small class="text-muted" id="rec-{{ $dose }}"></small>
+        @endif
+    </div>
+@endforeach
+
                                 </div>
                                 <div class="col-lg-6">
                                     <h6 class="fs-15">Serum Anti Rabies Diberikan?</h6>
@@ -428,6 +444,42 @@
 
                 
             </script>
+            {{-- script isi rekomendasi tanggal suntik  --}}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const varDos12 = document.getElementById("var_dos12");
+    const rec3 = document.getElementById("rec-var_dos3");
+    const rec4 = document.getElementById("rec-var_dos4");
+
+    function formatDate(date) {
+        return date.toISOString().split("T")[0]; // yyyy-mm-dd
+    }
+
+    function updateRecommendations() {
+        if (varDos12.value) {
+            const baseDate = new Date(varDos12.value);
+
+            // +14 hari
+            const date3 = new Date(baseDate);
+            date3.setDate(baseDate.getDate() + 7);
+            rec3.textContent = "Rekomendasi tanggal: " + formatDate(date3);
+
+            // +21 hari
+            const date4 = new Date(baseDate);
+            date4.setDate(baseDate.getDate() + 21);
+            rec4.textContent = "Rekomendasi tanggal: " + formatDate(date4);
+        } else {
+            rec3.textContent = "";
+            rec4.textContent = "";
+        }
+    }
+
+    varDos12.addEventListener("change", updateRecommendations);
+
+    // jalankan sekali kalau sudah ada value
+    updateRecommendations();
+});
+</script>
         @endpush
     </div> <!-- container -->
 </x-layoutnew.techmin>

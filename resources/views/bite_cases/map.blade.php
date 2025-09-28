@@ -11,33 +11,43 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Inisialisasi map di pusat Manado
-            var map = L.map('map').setView([-1.5, 124.83], 12);
+    document.addEventListener('DOMContentLoaded', function() {
+        // Data dari controller
+        var subdis = @json($subdis);
+        var cases = @json($cases);
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(map);
+        // Filter koordinat valid
+        var latlngs = subdis
+            .map(s => [parseFloat(s.lat), parseFloat(s.lng)])
+            .filter(c => !isNaN(c[0]) && !isNaN(c[1]));
 
-            // Data dari controller
-            var subdis = @json($subdis);
-            var cases = @json($cases);
+        // Inisialisasi map fallback
+        var map = L.map('map').setView([0.5218, 124.9111], 12);
 
-            // Pastikan lat/lng bertipe number
-            subdis.forEach(function(s) {
-                var lat = parseFloat(s.lat);
-                var lng = parseFloat(s.lng);
-                var total = cases[s.id] ?? 0;
+        // Tile layer OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
 
-                // Cek validitas koordinat
-                if (!isNaN(lat) && !isNaN(lng)) {
-                    L.marker([lat, lng])
-                     .bindPopup('<strong>' + s.name + '</strong><br>Kasus: ' + total)
-                     .addTo(map);
-                } else {
-                    console.warn('Koordinat invalid:', s);
-                }
-            });
+        // Tambahkan marker
+        latlngs.forEach(function(coord, index) {
+            var s = subdis[index];
+            var total = cases[s.id] ?? 0;
+
+            L.marker(coord)
+             .bindPopup('<strong>' + s.name + '</strong><br>Kasus: ' + total)
+             .addTo(map);
         });
+
+        // Jika ada marker, zoom & center otomatis
+        if (latlngs.length > 0) {
+            map.fitBounds(latlngs);
+        }
+
+        // Pastikan ukuran map ter-update agar tidak muncul di laut
+        setTimeout(function() {
+            map.invalidateSize();
+        }, 100);
+    });
     </script>
 </x-layoutnew.techmin>

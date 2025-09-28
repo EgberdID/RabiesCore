@@ -5,41 +5,50 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Str;
+
 
 class UserSeeder extends Seeder
 {
     public function run(): void
     {
+         // ambil password dari .env atau generate random
+        $plain = env('ADMIN_DEFAULT_PASS', Str::random(18));
+        $hashed = Hash::make($plain);
         // ✅ Superadmin
-        User::create([
+       $sup = User::create([
             'name' => 'Super Admin',
-            'email' => 'SA25@RabiesCore.com',
-            'password' => Hash::make('gWSqcdgu4PdnQCd'),
+            'email' => 'SA25@gmail.com',
+            'password' => $hashed,
             'role' => 'superadmin',
         ]);
+        // tampilkan password di console/log (sekali saja)
+        $this->command->info("Super Admin created: {$sup->email}");
+        $this->command->info("Super Admin password: {$plain}");
 
         // ✅ 16 Admin berbeda
        $admins = [
-                    'Puskesmas Sario',
-                    'Puskesmas Tuminting',
                     'Puskesmas Bahu',
+                    'Puskesmas Minanga',
+                    'Puskesmas Ranotana Weru',
+                    'Puskesmas Sario',
+                    'Puskesmas Teling Atas',
+                    'Puskesmas Wenang',
                     'Puskesmas Ranomuut',
                     'Puskesmas Tikala Baru',
-                    'Puskesmas Wenang',
+                    'Puskesmas Paniki Bawah',
+                    'Puskesmas Bengkol',
+                    'Puskesmas Kombos',
                     'Puskesmas Wawonasa',
-                    'Puskesmas Singkil',
-                    'Puskesmas Malalayang',
-                    'Puskesmas Paal Dua',
-                    'Puskesmas Mapanget',
+                    'Puskesmas Tuminting',
+                    'Puskesmas Bailang',
+                    'Puskesmas Tongkaina',
                     'Puskesmas Bunaken',
-                    'Puskesmas Bunaken Kepulauan',
-                    'Puskesmas Teling',
-                    // 'Puskesmas Paniki Bawah',
-                    'Puskesmas Paniki Atas',
-                    'RSUD Manado',
-                    'RSUD SULUT',
+                    //rsud
+                    'RSUD Kota Manado',
+                    'RSUD Prov SULUT',
                     'RSUP Kandou',
-                    'RS Khusus Infeksi'
+                    'RS Kita Waya'
                 ];
 
   foreach ($admins as $index => $name) {
@@ -48,15 +57,16 @@ class UserSeeder extends Seeder
 
             // gabungkan menjadi password plain
             $passwordPlain = 'RaCore' . $randomNumber . str_replace(' ', '', $name);
+            $email = 'AdminRabiesCore' . ($index + 1) . '@gmail.com';
 
             User::create([
                 'name' => $name,
-                'email' => 'admin' . ($index + 1) . '@RabiesCore.com',
+                'email' => $email,
                 'password' => Hash::make($passwordPlain),
                 'role' => 'admin',
             ]);
 
-            echo "Admin: $name, Password asli: $passwordPlain\n"; // optional, untuk catatan
+            $this->command->line("Admin: {$email} | Password asli: $passwordPlain");
         }
     }
 }
