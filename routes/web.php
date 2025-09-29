@@ -33,6 +33,8 @@ Route::middleware('auth', 'superadmin')->group(function () {
 
     // ✅ Route baru untuk cek NIK
     Route::get('/check-nik', [BiteCaseController::class, 'checkNik'])->name('check.nik');
+    //route STAFF
+    Route::resource('staff_vac', StaffController::class);
 
     //coba
     Route::get('/id-check', [BiteCaseController::class, 'idCheckPage'])->name('bite_cases.id_check');
