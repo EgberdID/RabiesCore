@@ -107,8 +107,8 @@ use Carbon\Carbon;
         $dangerMarks = ['Kepala/Leher', 'Jari Tangan/Kaki', 'Genital'];
         $bodyMarks   = ['Lengan', 'Tungkai', 'Badan'];
 
-        $option = 'Cek Data'; // default
-        $badge  = 'secondary';
+        $option = 'Konsultasi Dokter'; // default
+        $badge  = 'warning';
 
         // 🔴 Option A → Segera suntik
         if (
