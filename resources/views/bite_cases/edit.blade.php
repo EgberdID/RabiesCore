@@ -311,7 +311,7 @@
                                 <input type="date" class="form-control" name="y_va" value="{{ old('y_va', $biteCase->y_va) }}">
                             </div>
                         
-                    
+{{--                     
                     <div class="mb-3 col-lg-6">
                                 <label for="status1" class="form-label">Status Pasien</label>
                                     <select class="form-select" id="status1" name="status">
@@ -327,7 +327,7 @@
                                         <option>Edukasi</option>
                                       <option>Sudah Selesai</option>
                                     </select>
-                            </div>
+                            </div> --}}
                         </div>
                     </div> 
                 </div>
