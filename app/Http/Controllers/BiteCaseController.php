@@ -173,6 +173,52 @@ public function store(Request $request)
 
         'user'   => 'nullable|string',
         'status' => 'nullable|string',
+    ], [
+        // 🗣️ Custom pesan error dalam Bahasa Indonesia
+        'required' => 'Kolom :attribute wajib diisi.',
+        'unique'   => 'Kolom :attribute sudah terdaftar.',
+        'exists'   => 'Kolom :attribute tidak ditemukan dalam data master.',
+        'integer'  => 'Kolom :attribute harus berupa angka.',
+        'date'     => 'Kolom :attribute harus berupa tanggal yang valid.',
+        'date_format' => 'Format waktu pada kolom :attribute tidak sesuai (gunakan format HH:MM).',
+        'max' => 'Kolom :attribute terlalu panjang (maksimal :max karakter).',
+        'min' => 'Nilai pada kolom :attribute tidak boleh kurang dari :min.',
+    ], [
+        // 📋 Mapping nama field ke label Indonesia
+        'name' => 'Nama Lengkap',
+        'id_num' => 'NIK',
+        'address' => 'Alamat',
+        'pas_dis_id' => 'Kecamatan Pasien',
+        'pas_subdis_id' => 'Kelurahan Pasien',
+        'job' => 'Pekerjaan',
+        'age' => 'Umur',
+        'phone' => 'Nomor Telepon',
+
+        'case_day' => 'Tanggal Kejadian',
+        'case_time' => 'Waktu Kejadian',
+        'district_id' => 'Kecamatan Kejadian',
+        'sub_dis_id' => 'Kelurahan Kejadian',
+        'village_id' => 'Lingkungan Kejadian',
+
+        'animal_type' => 'Jenis Hewan Penular',
+        'animal_stat' => 'Status Hewan',
+        'animal_con' => 'Kondisi Hewan',
+
+        'bite_mark' => 'Lokasi Gigitan',
+        'bite_coun' => 'Jumlah Luka',
+        'wound_ide' => 'Kedalaman Luka',
+        'exp_cat' => 'Kategori Paparan',
+
+        'inj_wash' => 'Pencucian Luka',
+        'var_dos12' => 'Tanggal Vaksin Dosis 1/2',
+        'var_dos3' => 'Tanggal Vaksin Dosis 3',
+        'var_dos4' => 'Tanggal Vaksin Dosis 4',
+        'req' => 'Permintaan Tambahan',
+        'inj_loc' => 'Lokasi Injeksi',
+        'his_vac' => 'Riwayat Vaksinasi',
+        'y_va' => 'Tahun Vaksin Sebelumnya',
+        'treatment' => 'Penanganan',
+        'notes' => 'Catatan Tambahan',
     ]);
 
     if (isset($validated['bite_mark'])) {
@@ -290,19 +336,20 @@ public function store(Request $request)
     }
 
     // 📌 Chart jumlah kasus per kelurahan
-    public function subDisChart()
-    {
-        $cases = BiteCase::join('sub_dis', 'bite_cases.sub_dis_id', '=', 'sub_dis.id')
-            ->select('sub_dis.name', DB::raw('count(*) as total'))
-            ->groupBy('sub_dis.name')
-            ->orderByDesc('total')
-            ->get();
+    // public function subDisChart()
+    // {
+    //     $cases = BiteCase::join('sub_dis', 'bite_cases.sub_dis_id', '=', 'sub_dis.id')
+    //         ->select('sub_dis.name', DB::raw('count(*) as total'))
+    //         ->groupBy('sub_dis.name')
+    //         ->orderByDesc('total')
+    //         ->get();
 
-        $labels = $cases->pluck('name');
-        $data = $cases->pluck('total');
+    //     $labels = $cases->pluck('name');
+    //     $data = $cases->pluck('total');
 
-        return view('bite_cases.chart_subdis', compact('labels', 'data'));
-    }
+    //     return view('bite_cases.chart_subdis', compact('labels', 'data'));
+    // }
+    
 
    // 📌 Kirim email peringatan bulanan
     public function sendAlertEmail()
@@ -317,7 +364,7 @@ public function store(Request $request)
 
         // kirim email hanya kalau ada data
         if ($cases->isNotEmpty()) {
-            Mail::to('sertifikasiegberd@gmail.com')->send(new AlertEmail($cases));
+            Mail::to('joitumbel776@gmail.com')->send(new AlertEmail($cases));
         }
 
         return redirect()->back()->with('success', 'Email peringatan berhasil dikirim!');
@@ -463,12 +510,10 @@ public function exportCsv(Request $request)
 
     $query = BiteCase::with(['district','subDis','village']);
 
-    // Jika bukan superadmin, batasi data sesuai user
     if (!$user->isSuperAdmin()) {
         $query->where('user', $user->name);
     }
 
-    // Filter bulan
     if ($request->bulan) {
         $year = substr($request->bulan, 0, 4);
         $month = substr($request->bulan, 5, 2);
@@ -476,7 +521,6 @@ public function exportCsv(Request $request)
               ->whereMonth('case_day', $month);
     }
 
-    // Filter district / sub_dis / village
     if ($request->district) {
         $query->where('district_id', $request->district);
     }
@@ -490,40 +534,84 @@ public function exportCsv(Request $request)
     $cases = $query->get();
 
     $filename = "kasus_gigitan_" . now()->format('Ymd_His') . ".csv";
-    $handle = fopen('php://output', 'w');
 
-    $columns = [
-        'Nama','NIK','Umur','Tanggal Kasus','Waktu Kasus','Kecamatan',
-        'Kelurahan','Lingkungan','Kondisi Hewan','Tanda Gigitan',
-        'Kategori Ekspose','User Input'
-    ];
-    fputcsv($handle, $columns);
+    return response()->streamDownload(function() use ($cases) {
+        $handle = fopen('php://output', 'w');
 
-    foreach ($cases as $case) {
-        $caseDay = $case->case_day ? Carbon::parse($case->case_day)->format('d-m-Y') : '';
-        fputcsv($handle, [
-            $case->name,
-            "'" . $case->id_num,
-            $case->age,
-            $caseDay,
-            $case->case_time,
-            $case->district?->name,
-            $case->subDis?->name,
-            $case->village?->name,
-            $case->animal_con,
-            $case->bite_mark,
-            $case->exp_cat,
-            $case->user,
-        ]);
-    }
+        // 🟩 Tambahkan BOM agar Excel baca UTF-8 dengan benar
+        fprintf($handle, chr(0xEF).chr(0xBB).chr(0xBF));
 
-    return response()->streamDownload(function() use ($handle) {
+        // 🟩 Gunakan titik koma sebagai pemisah agar kolom tidak gabung di Excel
+        $delimiter = ';';
+
+        $columns = [
+            'Nama','NIK','Umur','Tanggal Kasus','Waktu Kasus','Kecamatan',
+            'Kelurahan','Lingkungan','Kondisi Hewan','Tanda Gigitan',
+            'Kategori Ekspose','User Input'
+        ];
+        fputcsv($handle, $columns, $delimiter);
+
+        foreach ($cases as $case) {
+            $caseDay = $case->case_day ? \Carbon\Carbon::parse($case->case_day)->format('d-m-Y') : '';
+
+            fputcsv($handle, [
+                $case->name,
+                // 🧩 Tambah tanda kutip agar NIK tidak berubah jadi format angka
+                "=\"{$case->id_num}\"",
+                $case->age,
+                $caseDay,
+                $case->case_time,
+                $case->district?->name,
+                $case->subDis?->name,
+                $case->village?->name,
+                $case->animal_con,
+                $case->bite_mark,
+                $case->exp_cat,
+                $case->user,
+            ], $delimiter);
+        }
+
         fclose($handle);
     }, $filename, [
-        'Content-Type' => 'text/csv',
+        'Content-Type' => 'text/csv; charset=UTF-8',
         'Content-Disposition' => 'attachment; filename="'.$filename.'"',
-    ]); 
+    ]);
 }
+
+
+// 📊 Chart jumlah kasus per Sub District (dengan filter admin)
+public function subDisChart(Request $request)
+{
+    // Ambil semua nama admin dari data kasus (bisa diganti dengan User model jika mau)
+    $admins = BiteCase::select('user')
+        ->distinct()
+        ->whereNotNull('user')
+        ->pluck('user');
+
+    // Base query
+    $query = BiteCase::join('sub_dis', 'bite_cases.sub_dis_id', '=', 'sub_dis.id')
+        ->select('sub_dis.name', DB::raw('count(*) as total'))
+        ->groupBy('sub_dis.name')
+        ->orderByDesc('total');
+
+    // Filter berdasarkan user input (nama admin)
+    if ($request->filled('user')) {
+        $query->where('bite_cases.user', $request->user);
+    }
+
+    $cases = $query->get();
+    $labels = $cases->pluck('name');
+    $data = $cases->pluck('total');
+
+    // Jika request dari AJAX, kirim JSON untuk update chart tanpa reload
+    if ($request->ajax()) {
+        return response()->json(['labels' => $labels, 'data' => $data]);
+    }
+
+    // View awal
+    return view('bite_cases.chart_subdis', compact('labels', 'data', 'admins'));
+}
+
 
 
 

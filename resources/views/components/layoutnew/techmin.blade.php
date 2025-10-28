@@ -3,13 +3,15 @@
 
 <head>
 	<meta charset="utf-8" />
-	<title>Dashboard Rabies Core</title>
+	<title>Dashboard Rabies Care</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta content="A fully responsive admin theme which can be used to build CRM, CMS,ERP etc." name="description" />
 	<meta content="Techzaa" name="author" />
 
 	<!-- App favicon -->
 	{{-- <link rel="shortcut icon" href="{{ asset('techmin/favicon.ico') }}"> --}}
+	<link rel="icon" type="image/x-icon" href="{{ asset('techmin/images/fav-pus.png') }}">
+
 
 
 	<!-- Daterangepicker css -->
@@ -27,6 +29,11 @@
 
 	<!-- Icons css -->
 	<link href="{{ asset('techmin/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+
+	{{-- pop up --}}
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	
 @stack('styles')
 </head>
 
@@ -394,7 +401,7 @@
 		    <!-- Logo Light -->
 		    <a href="{{ route('bite_cases.index') }}" class="logo logo-light"> 
 		        <span class="logo-lg">
-		            <img src="{{ asset('techmin/images/logo-rab.png') }}" alt="logo">
+		            <img src="{{ asset('techmin/images/rabies-care.png') }}" alt="logo">
 		        </span>
 		        {{-- <span class="logo-sm">
 		            <img src="{{ asset('techmin/images/logo-rab.png') }}"alt="small logo">
@@ -418,7 +425,7 @@
 
 		            <li class="side-nav-item">
 		                <a href="{{ route('bite_cases.index') }}" class="side-nav-link">
-		                    <i class="ri-dashboard-2-line"></i>
+		                    <i class="ri-dashboard-line"></i>
 		                    <span> Dashboard </span>		                    
 		                </a>
 		            </li>
@@ -434,7 +441,7 @@
 
 					<li class="side-nav-item">
 		                <a href="{{ route('bite_cases.create') }}" class="side-nav-link">
-		                    <i class="ri-folder-add-line"></i>
+		                    <i class="ri-file-add-line"></i>
 		                    <span>Tambah Data Pasien</span>
 
 		                </a>
@@ -447,18 +454,18 @@
 
 		                </a>
 		            </li>
-					<li class="side-nav-title">Pencatatan Pegawai</li>
+					<li class="side-nav-title">Pencatatan Profilaksis</li>
 					 <li class="side-nav-item">
 		                <a href="{{ route('staff_vac.create') }}" class="side-nav-link">
-		                    <i class="ri-file-list-line"></i>
-		                    <span> Tambah Data Pegawai</span>
+		                    <i class="ri-file-add-line"></i>
+		                    <span> Tambah Data Profilaksis</span>
 
 		                </a>
 		            </li>
 					 <li class="side-nav-item">
 		                <a href="{{ route('staff_vac.index') }}" class="side-nav-link">
 		                    <i class="ri-file-list-line"></i>
-		                    <span> Daftar Pegawai Tercatat</span>
+		                    <span> Daftar Profilaksis Tercatat</span>
 
 		                </a>
 		            </li>
@@ -494,22 +501,29 @@
 		            <li class="side-nav-title">Monitoring System</li>
 					<li class="side-nav-item">
 		                <a href="{{ route('bite_cases.id_check') }}" class="side-nav-link">
-		                    <i class="ri-file-list-line"></i>
+		                    <i class="ri-file-search-fill"></i>
 		                    <span> Pencarian NIK</span>
 
 		                </a>
 		            </li>
 					<li class="side-nav-item">
 		                <a href="{{ route('bite_cases.chart_subdis') }}" class="side-nav-link">
-		                    <i class="ri-file-list-line"></i>
+		                    <i class="ri-file-chart-line"></i>
 		                    <span>Grafik Kasus Rabies</span>
 
 		                </a>
 		            </li>
 					<li class="side-nav-item">
 		                <a href="{{ route('bite_cases.map') }}" class="side-nav-link">
-		                    <i class="ri-file-list-line"></i>
+		                    <i class="ri-map-2-line"></i>
 		                    <span>Peta Kasus Rabies</span>
+
+		                </a>
+		            </li>
+					<li class="side-nav-item">
+		                <a href="{{ route('bite_cases.export') }}" class="side-nav-link">
+		                    <i class="ri-download-line"></i>
+		                    <span>Export Data Rabies</span>
 
 		                </a>
 		            </li>

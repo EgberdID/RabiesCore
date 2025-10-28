@@ -26,6 +26,7 @@ Route::middleware('auth', 'superadmin')->group(function () {
     Route::get('/get-villages/{subdis}', [BiteCaseController::class, 'getVillages']);
 
     Route::get('/bite-cases/chart-subdis', [BiteCaseController::class, 'subDisChart'])->name('bite_cases.chart_subdis');
+    Route::get('/bite-cases/chart-subdis', [BiteCaseController::class, 'subDisChart'])->name('bite_cases.chart_subdis');
     Route::get('/bite-cases/send-alert', [BiteCaseController::class, 'sendAlertEmail'])->name('bite_cases.send_alert');
 
     // Route untuk peta kasus rabies per kelurahan

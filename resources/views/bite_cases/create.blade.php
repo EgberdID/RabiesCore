@@ -503,7 +503,38 @@
                     });
                 });
                 </script>
-                
+                 
+                 @if ($errors->any())
+<script>
+    let errorList = `
+        <ul style="text-align:left;">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    `;
+
+    Swal.fire({
+        icon: 'error',
+        title: 'Data Gagal Disimpan!',
+        html: errorList,
+        confirmButtonText: 'Perbaiki',
+        confirmButtonColor: '#d33'
+    });
+</script>
+@endif
+
+@if (session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: '{{ session('success') }}',
+        confirmButtonColor: '#198754'
+    });
+</script>
+@endif
+
 
             @endpush
     </div> <!-- container -->

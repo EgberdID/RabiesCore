@@ -21,33 +21,64 @@
             .map(s => [parseFloat(s.lat), parseFloat(s.lng)])
             .filter(c => !isNaN(c[0]) && !isNaN(c[1]));
 
-        // Inisialisasi map fallback
+        // Inisialisasi map
         var map = L.map('map').setView([0.5218, 124.9111], 12);
 
-        // Tile layer OpenStreetMap
+        // Tambahkan tile layer
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // Tambahkan marker
+        // Fungsi menentukan warna berdasarkan jumlah kasus
+        function getColor(total) {
+            if (total === 0) return 'green';
+            if (total <= 3) return 'orange';
+            return 'red';
+        }
+
+        // Tambahkan marker untuk tiap kelurahan
         latlngs.forEach(function(coord, index) {
             var s = subdis[index];
             var total = cases[s.id] ?? 0;
+            var color = getColor(total);
 
-            L.marker(coord)
-             .bindPopup('<strong>' + s.name + '</strong><br>Kasus: ' + total)
-             .addTo(map);
+            L.circleMarker(coord, {
+                radius: 10,
+                color: color,
+                fillColor: color,
+                fillOpacity: 0.7
+            })
+            .bindPopup('<strong>' + s.name + '</strong><br>Kasus: ' + total)
+            .addTo(map);
         });
 
-        // Jika ada marker, zoom & center otomatis
+        // Zoom otomatis menyesuaikan marker
         if (latlngs.length > 0) {
             map.fitBounds(latlngs);
         }
 
-        // Pastikan ukuran map ter-update agar tidak muncul di laut
-        setTimeout(function() {
-            map.invalidateSize();
-        }, 100);
+        // Pastikan ukuran map pas
+        setTimeout(() => map.invalidateSize(), 100);
+
+        // Tambahkan legenda warna
+        var legend = L.control({ position: 'bottomright' });
+        legend.onAdd = function () {
+            var div = L.DomUtil.create('div', 'info legend');
+            var grades = [
+                { label: '0 Kasus', color: 'green' },
+                { label: '1–3 Kasus', color: 'orange' },
+                { label: '>4 Kasus', color: 'red' }
+            ];
+
+            div.innerHTML += '<h4>Keterangan</h4>';
+            grades.forEach(g => {
+                div.innerHTML +=
+                    '<i style="background:' + g.color + '; width:18px; height:18px; float:left; margin-right:8px; opacity:0.7;"></i> ' +
+                    g.label + '<br>';
+            });
+            return div;
+        };
+        legend.addTo(map);
     });
     </script>
 </x-layoutnew.techmin>
